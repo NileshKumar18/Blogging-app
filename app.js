@@ -29,10 +29,10 @@ app.get('/login', (req, res) => {
 })
 
 app.get('/profile', isLoggedIn, async (req, res) => {
-    const User = await userModel.findOne({email : req.user.email})
-    // console.log(user);
+    const user = await userModel.findOne({email : req.user.email}).populate("posts");
+    console.log(user);
     
-    res.render("profile", { User });
+    res.render("profile", { user });
 })
 
 // Logout path
@@ -83,7 +83,7 @@ app.post('/login', async (req, res) => {
         if (result) {
             const token = jwt.sign({ email: email, Id: user._id }, "nilesh");
             res.cookie("token", token);
-            res.redirect("/profile");
+            res.redirect("/profile" );
         }
         else {
             res.redirect('/login')
@@ -92,6 +92,20 @@ app.post('/login', async (req, res) => {
     })
     }
 
+})
+
+app.post('/post' , isLoggedIn , async(req,res) => {
+    const user =  await userModel.findOne({email : req.user.email}).populate("posts");
+    const {content } = req.body;
+   const posts = await postModel.create({
+        user : user._id,
+        content : content,
+    })
+  
+    
+    user.posts.push(posts);
+    await user.save();
+    res.redirect('/profile');
 })
 
 function isLoggedIn(req, res, next) {
