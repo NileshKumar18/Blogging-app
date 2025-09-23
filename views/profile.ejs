@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-200 min-h-screen flex items-center justify-center">
+    <div class="max-w-md mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="p-4">
+            <h2 class="text-xl font-bold mb-4 ">Welcome!<span class="text-blue-500"> @<%= user.username %></span></h2>
+            <p class="mb-2">Age: <%= user.age %></p>
+           
+
+
+            <a href="/logout" class="text-white px-2 py-1 rounded-md hover:underline bg-blue-500">Logout</a>
+        </div>
+    </div>
+
+</body>
+</html>

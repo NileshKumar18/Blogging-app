@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@2"></script>
+     <style>
+        body{
+            background-color: #1e293b;
+            
+
+        }
+        .bg-blue-500 {
+            background-color: #3b82f6;
+            border: none;
+            color: white;
+            padding: 5px ;
+            border-radius: 5px;
+        }
+     </style>
+</head>
+<body>
+    <div class="w-full bg-white flex items-center flex-col justify-center">
+
+        <form action="register" method="post" class="text-black flex-col flex items-center flex-col gap-5 w-80 justify-center">
+            <input class=" border-2 border-black rounded px-2 py-2 text-black " type="text" name="username" placeholder="username" autocomplete="off" required="true" id="">
+            <input class=" border-2 border-black rounded px-2 py-2 text-black " type="email" name="email" placeholder="email" autocomplete="off" required="true" id="">
+            <input class=" border-2 border-black rounded px-2 py-2 text-black " type="password" name="password" placeholder="password" autocomplete="off" required="true" id="">
+            <input class=" border-2 border-black rounded px-2 py-2 text-black " type="number" name="age" placeholder="age" autocomplete="off" required="true" id="">
+            <input class=" border-2 border-none rounded px-2 py-2 text-black  bg-blue-500" type="submit" value="submit">
+        </form>
+    </div>
+    
+</body>
+</html>
