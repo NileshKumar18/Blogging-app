@@ -37,7 +37,8 @@
                     <div class="bg-gray-700 border-2 border-black w-[300px] p-4 m-4 rounded-md">
                         <h3>@<%= user.username %></h3>
                         <p><%= post.content %></p>
-                        <a href="" class=" mr-2 text-blue-500 hover:underline">Like</a>
+                        <small><%=post.like.length %>likes</small>
+                        <a href="/like/<%= post._id %>" class=" mr-2 text-blue-500 hover:underline"><%= post.like.indexOf(user._id) === -1 ? "Like" : "Unlike" %></a>
                         <a href="" class="text-gray-500 hover:underline">Edit</a>
                     </div>
                    <%

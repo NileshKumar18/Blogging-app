@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const userModel = require("./models/user");
 const cookieParser = require('cookie-parser');
-const user = require('./models/user');
+
 const bcrypt = require('bcrypt');
 const postModel = require('./models/post')
 const jwt = require('jsonwebtoken');
@@ -29,9 +29,9 @@ app.get('/login', (req, res) => {
 })
 
 app.get('/profile', isLoggedIn, async (req, res) => {
-    const user = await userModel.findOne({email : req.user.email}).populate("posts");
-    console.log(user);
-    
+    const user = await userModel.findOne({ email: req.user.email }).populate("posts");
+    // console.log(user);
+
     res.render("profile", { user });
 })
 
@@ -41,7 +41,24 @@ app.get('/logout', (req, res) => {
     res.redirect('/login');
 })
 
+app.get('/like/:id', isLoggedIn, async (req, res) => {
+    const post = await postModel.findById(req.params.id).populate("user");
+
+    if (post.like.includes(req.user.Id)) {
+      post.like =   post.like.filter(id => id.toString() != req.user.Id);
+    }
+    else {
+       post.like.push(req.user.Id);
+    }
+    await post.save();
+    res.redirect('/profile');
+});
+
+
+
+
 // Registering The User and hashing the Password and save the User to the DB and Generating the JWT token And setting the cookie
+
 app.post('/register', async (req, res) => {
     const { username, email, password, age } = req.body;
     const user = await userModel.findOne({ email });;
@@ -77,32 +94,32 @@ app.post('/login', async (req, res) => {
     const user = await userModel.findOne({ email });
     if (!user) {
         res.send("Something  Went wrong");
-    }else{
-        
-    bcrypt.compare(password , user.password, (err, result) => {
-        if (result) {
-            const token = jwt.sign({ email: email, Id: user._id }, "nilesh");
-            res.cookie("token", token);
-            res.redirect("/profile" );
-        }
-        else {
-            res.redirect('/login')
-        }
+    } else {
 
-    })
+        bcrypt.compare(password, user.password, (err, result) => {
+            if (result) {
+                const token = jwt.sign({ email: email, Id: user._id }, "nilesh");
+                res.cookie("token", token);
+                res.redirect("/profile");
+            }
+            else {
+                res.redirect('/login')
+            }
+
+        })
     }
 
 })
 
-app.post('/post' , isLoggedIn , async(req,res) => {
-    const user =  await userModel.findOne({email : req.user.email}).populate("posts");
-    const {content } = req.body;
-   const posts = await postModel.create({
-        user : user._id,
-        content : content,
+app.post('/post', isLoggedIn, async (req, res) => {
+    const user = await userModel.findOne({ email: req.user.email })
+    const { content } = req.body;
+    const posts = await postModel.create({
+        user: user._id,
+        content: content,
     })
-  
-    
+
+
     user.posts.push(posts);
     await user.save();
     res.redirect('/profile');
