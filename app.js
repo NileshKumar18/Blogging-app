@@ -29,10 +29,10 @@ app.get('/login', (req, res) => {
 })
 
 app.get('/profile', isLoggedIn, async (req, res) => {
-    const user = await userModel.findOne({email : req.user.email})
-    console.log(user);
+    const User = await userModel.findOne({email : req.user.email})
+    // console.log(user);
     
-    res.render("profile", { user });
+    res.render("profile", { User });
 })
 
 // Logout path
@@ -96,7 +96,7 @@ app.post('/login', async (req, res) => {
 
 function isLoggedIn(req, res, next) {
     if (req.cookies.token == "") {
-        res.send("You are not logged in");
+        res.status(401).send("You are not logged in");
     }
     else {
         const data = jwt.verify(req.cookies.token, "nilesh",)
