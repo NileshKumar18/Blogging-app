@@ -54,7 +54,17 @@ app.get('/like/:id', isLoggedIn, async (req, res) => {
     res.redirect('/profile');
 });
 
+app.get('/edit/:id' , isLoggedIn , async(req , res) => {
+    const post = await postModel.findById(req.params.id);
+   
+res.render("edit", { post });
 
+})
+
+app.post('/update/:id' , isLoggedIn , async(req , res) => {
+    const post = await postModel.findOneAndUpdate({_id : req.params.id} , {content : req.body.content} );
+    res.redirect('/profile')
+})
 
 
 // Registering The User and hashing the Password and save the User to the DB and Generating the JWT token And setting the cookie

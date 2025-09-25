@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="bg-gray-800 min-h-screen flex items-center p-8">
+    <div>
+
+        <div class="p-4">
+            <a href="/logout" class="text-white text-center px-2 py-1 rounded-md hover:underline bg-red-500">Logout</a>
+            
+            <h1>Edit your Post</h1>
+        </div>
+        <div class="p-4 border-t border-gray-300 flex items-center space-x-2">
+            <form action="/update/<%= post._id %>" method="POST" class="flex gap-4 flex-col">
+                <textarea name="content" id="" 
+                    class="border-1 rounded-md p-2 inline-block outline-none w-[300px]"   required="true"><%= post.content %> </textarea>
+                <input type=submit value="Update Post"
+                    class="text-white text-center px-2 py-1 rounded-md hover:underline bg-blue-500">
+            </form>
+
+
+
+        </div>
+>
+    </div>
+
+
+
+
+
+
+</body>
+
+</html>
